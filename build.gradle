@@ -1,0 +1,28 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile (
+        'com.amazonaws:aws-java-sdk-dynamodb:1.11.433'
+     )
+     
+     compileOnly('org.projectlombok:lombok:1.18.2')
+}
+
+task buildZip(type: Zip) {
+    from compileJava
+    from processResources              
+    into('lib') {
+        from configurations.runtime
+    }           
+}
+
+sourceCompatibility = '10'
+targetCompatibility = '10'
+
+mainClassName = 'cloud.developing.orm.Db'
